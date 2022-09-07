@@ -17,13 +17,13 @@ For assistance:
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 
-list - array of student data
-page - page number
+@param {string} list - array of student data
+@param {number} page - page number
 */
 
 function showPage (list, page) {
-   const startIndex = (page * 9) - 9; //the index for the first student on the page
-   const endIndex = page * 9; //the index for the last student on the page
+   const startIndex = (page * 9) - 9; // index for the first student on the page
+   const endIndex = page * 9; // index for the last student on the page
    const studentList = document.querySelector('.student-list');
    studentList.innerHTML =''; // removes any students that previously displayed
 
@@ -51,25 +51,19 @@ function showPage (list, page) {
 }
 
 
-
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 
-list - student data
+@param {string} list - array of student data
 */
 
 function addPagination (list) {
-   const pages = Math.ceil(list.length / 9) ; //store the value of the number of pagination buttons needed. 
+   const pages = Math.ceil(list.length / 9) ; // number of pagination buttons needed. 
    const linkList = document.querySelector('.link-list');
    linkList.innerHTML = ''; // remove any pagination buttons previously displayed
-   console.log(pages);
+
    for (let i=1; i < pages + 1 ; i++) {
-        // const button = document.createElement('button');
-        // button.textContent = `${i}`; 
-         // linkList.appendChild(button); // attatch button to link list 
-
-
          const button = `
          <li>
           <button type="button">${i}</button>
@@ -81,7 +75,7 @@ function addPagination (list) {
          
 
          linkList.addEventListener( 'click', (e) => {
-            if (e.target.tagName = 'BUTTON') { //if the tagName of the event target (i.e. the element clicked) is a BUTTON element.
+            if (e.target.tagName = 'BUTTON') { //if the tagName of the event target is a BUTTON element.
                document.querySelector('.active').className = ''; // removes active  class from the previous active button
                e.target.className = 'active'; // the current button class name becomes active
                showPage(list, parseInt(e.target.textContent));
@@ -91,14 +85,13 @@ function addPagination (list) {
          });
       }
       
-   
+   return linkList; 
 
 }
 
 
 
 // Call functions
-
 
 showPage (data, 1);
 addPagination (data);
