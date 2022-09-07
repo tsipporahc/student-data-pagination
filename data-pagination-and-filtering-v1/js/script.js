@@ -22,13 +22,13 @@ page - page number
 */
 
 function showPage (list, page) {
-   const startIndex = (parseInt(page) * 9) - 9; //the index for the first student on the page
-   const endIndex = parseInt(page) * 9; //the index for the last student on the page
+   const startIndex = (page * 9) - 9; //the index for the first student on the page
+   const endIndex = page * 9; //the index for the last student on the page
    const studentList = document.querySelector('.student-list');
    studentList.innerHTML =''; // removes any students that previously displayed
 
-  for (let i=0; i<list.length; i++) {
-      if (endIndex >= i >= startIndex) {
+  for (let i=0; i < list.length; i++) {
+      if (i >= startIndex && endIndex > i) {
          const studentItem = `
          <li class="student-item cf">
             <div class="student-details">
@@ -45,10 +45,11 @@ function showPage (list, page) {
          
       }
    } 
+   
    return studentList;
 
 }
-showPage (data, 1);
+
 
 
 /*
@@ -59,28 +60,45 @@ list - student data
 */
 
 function addPagination (list) {
-   const numButton = Math.ceil(list.length / 9) ; //store the value of the number of pagination buttons needed. 
+   const pages = Math.ceil(list.length / 9) ; //store the value of the number of pagination buttons needed. 
    const linkList = document.querySelector('.link-list');
    linkList.innerHTML = ''; // remove any pagination buttons previously displayed
-   console.log(numButton);
-   for (let i=1; i < numButton + 1 ; i++) {
-        /*  const button = document.createElement('button');
-         button.textContent = `${i}`;
-         linkList.appendChild(button); // attatch button to link list */
+   console.log(pages);
+   for (let i=1; i < pages + 1 ; i++) {
+        // const button = document.createElement('button');
+        // button.textContent = `${i}`; 
+         // linkList.appendChild(button); // attatch button to link list 
 
 
-         const pageNumber = `
+         const button = `
          <li>
           <button type="button">${i}</button>
          </li>
          `;
-         linkList.insertAdjacentHTML("beforeend", pageNumber);
+         linkList.insertAdjacentHTML("beforeend", button);
 
+         document.querySelector('button').className = 'active'; // add active class tot he first button
+         
+
+         linkList.addEventListener( 'click', (e) => {
+            if (e.target.tagName = 'BUTTON') { //if the tagName of the event target (i.e. the element clicked) is a BUTTON element.
+               document.querySelector('.active').className = ''; // removes active  class from the previous active button
+               e.target.className = 'active'; // the current button class name becomes active
+               showPage(list, parseInt(e.target.textContent));
+
+            }
+
+         });
       }
       
+   
 
 }
 
-addPagination (data);
+
 
 // Call functions
+
+
+showPage (data, 1);
+addPagination (data);
