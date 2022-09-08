@@ -75,7 +75,7 @@ function addPagination (list) {
          
 
          linkList.addEventListener( 'click', (e) => {
-            if (e.target.tagName = 'BUTTON') { //if the tagName of the event target is a BUTTON element.
+            if (e.target.tagName == 'BUTTON') { //if the tagName of the event target is a BUTTON element.
                document.querySelector('.active').className = ''; // removes active  class from the previous active button
                e.target.className = 'active'; // the current button class name becomes active
                showPage(list, parseInt(e.target.textContent));
